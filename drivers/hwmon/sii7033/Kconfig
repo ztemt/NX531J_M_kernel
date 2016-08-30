@@ -1,0 +1,7 @@
+config ZTEMT_TYPE_C_CTL_SII7033
+	tristate "ztemt type-c control  sii7033"
+	default n
+	help
+	  This is the main file for type-c control driver for sii7033.
+	  Say Y here if you have a sii7033  connected
+	  to your system.

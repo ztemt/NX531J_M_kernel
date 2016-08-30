@@ -1,0 +1,118 @@
+################################################# SENROS START
+menuconfig NUBIA_SENSORS
+	tristate "NUBIA SENSORS ON"
+	default n
+	help
+		nubia senor
+if NUBIA_SENSORS
+config FEATURE_NUBIA_SENSORS_LOG_ON
+	tristate "NUBIA SENSORS LOG ON"
+	depends on NUBIA_SENSORS
+	default n
+	help
+		If you want to enable the sensor log,
+		then choose this config
+################################################# PROX START
+config NUBIA_SENSORS_PROX_PA224
+	tristate "support litehole prox sensor driver"
+	depends on NUBIA_SENSORS
+	default n
+	help
+		nubia prox device
+
+################################################# RGB START
+config NUBIA_SENSORS_RGB_BH1745
+	tristate "support rgb bh1745 driver"
+	depends on NUBIA_SENSORS
+	default n
+	help
+		nubia rgb device
+
+################################################# PRESSURE_DEVICE START
+config NUBIA_SENSORS_PRESSURE_DEVICE
+	tristate "support pressure device driver"
+	depends on NUBIA_SENSORS
+	default n
+	help
+		nubia pressure device
+
+################################################# HALL START
+config NUBIA_SENSORS_HALL_DEVICE
+	tristate "hall devicedriver"
+	depends on NUBIA_SENSORS
+	default n
+	help
+	  If you say yes here you get support for
+	  hall device
+################################################# IR REMOTE START
+config NUBIA_SENSORS_IR_REMOTE_I_THREE
+	tristate "I_THREE device driver"
+	depends on NUBIA_SENSORS
+	default n
+	help
+	  If you say yes here you get support for UEI's
+	  IR Remote control i_three
+################################################# FINGER_PRINTER START
+menuconfig NUBIA_SENSORS_FP
+	tristate "NUBIA FP DEVICE"
+	depends on NUBIA_SENSORS
+	default n
+
+if NUBIA_SENSORS_FP
+
+config NUBIA_FP_AUTODETECT
+	tristate "nubia fingerprint autodetect"
+	depends on NUBIA_SENSORS_FP
+	default n
+	help
+	  If you say yes here you, will enable fingerprint
+	  autodetect function.
+
+################################################# FINGER_PRINTER_GF318M START
+source drivers/hwmon/nubia_sensors/gf318m/Kconfig
+choice
+        prompt "choose the GF318M device style"
+        depends on NUBIA_SENSORS_FP_GF318M
+		default NUBIA_SENSORS_FP_GF318M_PLATFORM
+		help
+		  GF318M need to select the work style
+
+config NUBIA_SENSORS_FP_GF318M_SPI
+        bool "GF318M work as SPI device"
+        help
+          If you want GF318M work as SPI device, select it.
+
+config NUBIA_SENSORS_FP_GF318M_PLATFORM
+        bool "GF318M work as PLATFORM device"
+        help
+          If you want GF318M work as PLATFORM device, select it.
+
+endchoice
+################################################# FINGER_PRINTER_GF318M END
+
+################################################# FINGER_PRINTER_FPC1020 START
+source drivers/hwmon/nubia_sensors/fpc1020/Kconfig
+choice
+        prompt "choose the FPC1020 device style"
+        depends on NUBIA_SENSORS_FP_FPC1020
+		default NUBIA_SENSORS_FP_FPC1020_PLATFORM
+		help
+		  FPC1020 need to select the work style
+
+config NUBIA_SENSORS_FP_FPC1020_SPI
+        bool "FPC1020 work as SPI device"
+        help
+          If you want FPC1020 work as SPI device, select it.
+
+config NUBIA_SENSORS_FP_FPC1020_PLATFORM
+        bool "FPC1020 work as PLATFORM device"
+        help
+          If you want FPC1020 work as PLATFORM device, select it.
+
+endchoice
+################################################# FINGER_PRINTER_FPC1020 END
+
+endif
+################################################# FINGER_PRINTER END
+
+endif

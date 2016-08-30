@@ -1,0 +1,1 @@
+obj-$(CONFIG_NUBIA_SENSORS_FP_FPC1020_PLATFORM) += fpc1020_tee_qsee4.o

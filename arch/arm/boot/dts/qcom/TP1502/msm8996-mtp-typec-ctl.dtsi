@@ -1,0 +1,71 @@
+/* Copyright (c) 2015, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&i2c_8 { /* BLSP2 QUP2 */
+	sii-70xx@68 {           // sii7033 PAGE 0 address is 0x00
+	        compatible = "simg,sii70xx";
+	        reg = <0x68>;   // despite doc, reflect sii8620 i2c address
+	        interrupt-parent = <&tlmm>;
+		interrupts = <11 0x4>;	
+		//interrupts = <8 4>; //IRQ_TYPE_LEVEL_HIGH
+
+		vdd_ana-supply = <&pm8994_l17>;
+		vcc_i2c-supply = <&pm8994_s4>;
+
+		pinctrl-names = "active", "sleep";
+		pinctrl-0 = <&sii_active>;
+		pinctrl-1 = <&sii_suspend>;
+
+	        simg-70xx,irq-gpio    = <&tlmm 11 0x00>;
+	        simg-70xx,vbus-src  = <&tlmm 5 0x01>;
+	        simg-70xx,vbus-snk = <&tlmm 4 0x01>;
+	        simg-70xx,reset-enable = <&tlmm 16 0x03>;
+	        simg-70xx,lev-shf = <&tlmm 47 0x01>;
+	};
+    tusb320@60 {
+                   compatible = "ti,usbtypec";
+                   reg = <0x60>;
+                   pinctrl-names = "ti_pin_active","ti_pin_suspend";
+                   pinctrl-0 = <&ti_enable_active &ti_int_active>;
+                   pinctrl-1 = <&ti_enable_suspend &ti_int_suspend>;
+                   ti,enable-gpio = <&tlmm 16 0x00>;
+                   ti,int-gpio = <&tlmm 11 0x01>;
+                };
+	fusb301@21 {
+                   compatible = "fchild,usbtypec";
+                   reg = <0x21>;
+                   pinctrl-names = "fchild_pin_active","fchild_pin_suspend";
+                   pinctrl-0 = <&fchild_enable_active &fchild_int_active>;
+                   pinctrl-1 = <&fchild_enable_suspend &fchild_int_suspend>;
+                   fchild,enable-gpio = <&tlmm 16 0x00>;
+                   fchild,int-gpio = <&tlmm 11 0x01>;
+                };
+	ptn5150@20 {
+		     compatible = "nxp,usbtypec";
+                   reg = <0x20>;
+                   pinctrl-names = "nxp_pin_active","nxp_pin_suspend";
+                   pinctrl-0 = <&nxp_enable_active &nxp_int_active>;
+                   pinctrl-1 = <&nxp_enable_suspend &nxp_int_suspend>;
+                   nxp,enable-gpio = <&tlmm 16 0x00>;
+                   nxp,int-gpio = <&tlmm 11 0x01>;
+                };
+	pi5u@1d {
+		     compatible = "pericom,usbtypec";
+                   reg = <0x1d>;
+                   pinctrl-names = "pericom_pin_active","pericom_pin_suspend";
+                   pinctrl-0 = <&pericom_enable_active &pericom_int_active>;
+                   pinctrl-1 = <&pericom_enable_suspend &pericom_int_suspend>;
+                   pericom,enable-gpio = <&tlmm 16 0x00>;
+                   pericom,int-gpio = <&tlmm 11 0x01>;
+                 };
+};
+		
